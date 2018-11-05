@@ -5,12 +5,25 @@
   </Configs>
   <NewExtensions/>
   <sounds name="sound"/>
-  <sprites name="sprites"/>
-  <backgrounds name="background"/>
+  <sprites name="sprites">
+    <sprite>sprites\box_spr</sprite>
+    <sprite>sprites\whoa_spr</sprite>
+  </sprites>
+  <backgrounds name="background">
+    <background>background\background0</background>
+  </backgrounds>
   <paths name="paths"/>
+  <scripts name="scripts"/>
+  <shaders name="shaders">
+    <shader type="GLSLES">shaders\redify.shader</shader>
+    <shader type="GLSLES">shaders\scan.shader</shader>
+  </shaders>
   <objects name="objects">
-    <object>objects\control</object>
+    <object>objects\control_obj</object>
   </objects>
+  <rooms name="rooms">
+    <room>rooms\sandbox</room>
+  </rooms>
   <help>
     <rtf>help.rtf</rtf>
   </help>
