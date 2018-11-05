@@ -18,31 +18,24 @@ void main()
     v_vTexcoord = in_TextureCoord;
 }
 
-//######################_==_YOYO_SHADER_MARKER_==_######################@~varying vec2 v_vTexcoord;
+//######################_==_YOYO_SHADER_MARKER_==_######################@~//
+// Simple passthrough fragment shader
+//
+varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
 
-uniform sampler2D prev;
 void main()
 {
     vec2 xy = v_vTexcoord.xy;
-    
-    //float step_size = .005;
-    float step_size = .2;
     vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
     vec4 white = vec4(1.0, 1.0, 1.0, 1.0);
-    if (xy.x < step_size) {
-        vec4 last = texture2D(prev, vec2(1.0, 1.0));
-        if(last == red) {
-            gl_FragColor = white;
-        } else {
-            gl_FragColor = red;
-        }
+    
+    if (xy.x > .5 && xy.x < .6 && xy.y > .5 && xy.y < .6) {
+        gl_FragColor = red;
     } else {
-        vec4 prev = texture2D(prev, vec2(xy.x - step_size, xy.y));
-        if (prev == red) {
-            gl_FragColor = red;
-        } else {
-            gl_FragColor = white;
-        }
+        gl_FragColor = white;
     }
+    
+    //gl_FragColor = v_vColour * texture2D( gm_BaseTexture, v_vTexcoord );
 }
+

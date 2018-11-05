@@ -28,6 +28,10 @@
             <string>t = 0;
 surf = surface_create(room_height, room_width);
 buff = surface_create(room_height, room_width);
+inertia_handle = shader_get_uniform(diffuse, "inertia");
+inertia = 500;
+
+rect_size = 20;
 </string>
           </argument>
         </arguments>
@@ -73,14 +77,36 @@ buff = surface_create(room_height, room_width);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>surface_set_target(surf);
-    shader_set(scan);
-        prev = shader_get_sampler_index(scan, "prev");
-        surf_tex = surface_get_texture(surf);
-        texture_set_stage(prev, surf_tex);
-        draw_surface(buff, 0, 0);
-    shader_reset();
-surface_reset_target();
+            <string>shader_set_uniform_f(inertia_handle, inertia);
+loops = 1;
+for (i = 0; i &lt; loops; i++) {
+    surface_set_target(surf);
+        if (t == 1) {
+            shader_set(setup)
+        } else {
+            shader_set(diffuse);
+        }
+            prev = shader_get_sampler_index(diffuse, "prev");
+            surf_tex = surface_get_texture(surf);
+            texture_set_stage(prev, surf_tex);
+            draw_surface(buff, 0, 0);
+        shader_reset();
+        if(mouse_check_button(mb_left)) {
+            rect_x = mouse_x - (rect_size / 2);
+            rect_y = mouse_y - (rect_size / 2);
+            draw_circle_colour(mouse_x, mouse_y, rect_size, c_green, c_green, false);
+        }
+    surface_reset_target();
+}
+
+if (t % 50 == 0) {
+    rect_x = random(1024);
+    rect_y = random(1024);
+    
+    surface_set_target(surf);
+    draw_rectangle_colour(rect_x, rect_y, rect_x + rect_size, rect_y + rect_size, c_blue, c_blue, c_blue, c_blue, false);
+    surface_reset_target();
+}
 
 draw_surface(surf, 0, 0);
 </string>
