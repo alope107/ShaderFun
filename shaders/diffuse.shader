@@ -26,7 +26,7 @@ uniform sampler2D prev;
 
 void main()
 {
-    float inertia = .001;
+    float inertia = .0005;
     float room_width = 1024.0;
     vec2 xy = v_vTexcoord.xy;
     
@@ -43,6 +43,7 @@ void main()
     
     for(int i = 0; i < 4; i++) {
         vec2 neighbor_coord = xy + steps[i];
+        
         if (neighbor_coord.x > 0.0 && 
             neighbor_coord.y > 0.0 && 
             neighbor_coord.x < 1.0 &&

@@ -27,22 +27,14 @@ varying vec4 v_vColour;
 void main()
 {
     vec2 xy = v_vTexcoord.xy;
-    float div = 10.0;
-    float base = .7;
-    vec4 col = vec4(xy.x * xy.y, xy.x + xy.y, xy.y, 1.0);
-    col /= div;
-    col += base;
-    col.a = 1.0;
-    gl_FragColor = col;
-    /*vec4 red = vec4(1.0, 0.0, 0.0, 1.0);
-    vec4 white = vec4(1.0, 1.0, 1.0, 1.0);
+    vec4 rgba = v_vColour * texture2D( gm_BaseTexture, v_vTexcoord );
+    float steps_per_loop = 10000.0;//10000000000000000000.0;
     
-    if (xy.x > .5 && xy.x < .6 && xy.y > .5 && xy.y < .6) {
-        gl_FragColor = red;
-    } else {
-        gl_FragColor = white;
-    }*/
-    
-    //gl_FragColor = v_vColour * texture2D( gm_BaseTexture, v_vTexcoord );
+    for(int i = 0; i < 3; i++) {
+        rgba[i] *= steps_per_loop;
+        float trunc = floor(rgba[i]);
+        rgba[i] -= trunc;
+    }
+    gl_FragColor = rgba;
 }
 

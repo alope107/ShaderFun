@@ -82,7 +82,7 @@ loops = 1;
 for (i = 0; i &lt; loops; i++) {
     surface_set_target(surf);
         if (t == 1) {
-            shader_set(setup)
+            shader_set(setup);
         } else {
             shader_set(diffuse);
         }
@@ -94,21 +94,24 @@ for (i = 0; i &lt; loops; i++) {
         if(mouse_check_button(mb_left)) {
             rect_x = mouse_x - (rect_size / 2);
             rect_y = mouse_y - (rect_size / 2);
-            draw_circle_colour(mouse_x, mouse_y, rect_size, c_green, c_green, false);
+            col = make_colour_rgb(.5, .5, .5);
+            draw_circle_colour(mouse_x, mouse_y, rect_size, col, col, false);
         }
     surface_reset_target();
 }
 
 if (t % 50 == 0) {
-    rect_x = random(1024);
-    rect_y = random(1024);
+    rect_x = random(room_width);
+    rect_y = random(room_height);
     
     surface_set_target(surf);
     draw_rectangle_colour(rect_x, rect_y, rect_x + rect_size, rect_y + rect_size, c_blue, c_blue, c_blue, c_blue, false);
     surface_reset_target();
 }
 
-draw_surface(surf, 0, 0);
+shader_set(loop_color);
+    draw_surface(surf, 0, 0);
+shader_reset();
 </string>
           </argument>
         </arguments>
